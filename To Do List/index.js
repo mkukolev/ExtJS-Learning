@@ -10,7 +10,7 @@ Ext.define('Task', {
         {name: 'description', type: 'string'},
         {name: 'createDate', type: 'date'},
         {name: 'endDate', type: 'date'},
-        {name: 'done', type: 'boolean', defaultValue: false},
+        {name: 'done', type: 'boolean', defaultValue: false}
     ],
     validations: [
         {type: 'length', field: 'header', max: 100},
