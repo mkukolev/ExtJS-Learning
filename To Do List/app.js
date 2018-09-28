@@ -1,8 +1,7 @@
 Ext.application({
     name: 'ToDoApp',
     appFolder: 'app',
-    
-    model: ['Task'],
-    store: ['taskStore', 'statusActiveStore'],
+    models: ['Task'],
+    stores: ['taskStore', 'statusActiveStore'],
 
-})
+});
