@@ -1,5 +1,5 @@
 // Сделал store для комбобокса с возможностью смены статуса задачи.
-Ext.create('ToDoApp.store.statusActiveStore', {
+Ext.define('ToDoApp.store.StatusActive', {
     extend: 'Ext.data.Store',
     fields: ['val', 'name'],
     data: [
@@ -7,3 +7,4 @@ Ext.create('ToDoApp.store.statusActiveStore', {
         {value: '1', name: 'Done'}
     ]
 });
+var stActive = Ext.create('ToDoApp.store.StatusActive');

@@ -1,13 +1,14 @@
 
-Ext.onReady(function() {
-    // Делаю грид с 6ю столбцами. Хочу сделать его расположение по центру.
-    Ext.create('Ext.grid.Panel', {
+
+// Делаю грид с 6ю столбцами. Хочу сделать его расположение по центру.
+    Ext.define('ToDoApp.view.TaskList', {
+        extend: 'Ext.grid.Panel',
         renderTo: Ext.getBody(),
         title: 'To Do List',
         width: 850,
         height: 600,
         align: 'center',
-        store: store,
+        store: this.TaskStore,
         tbar: [
             { id: 'createTask', xtype: 'button', text: 'New task', },
             { id: 'searchBtn', xtype: 'button', text: 'Search'},
@@ -51,7 +52,7 @@ Ext.onReady(function() {
                 editor: 
                 {
                     xtype: 'combobox',
-                    store: workStatus,
+                    store: this.StatusActive,
                     valueField: 'value',
                     displayField: 'name',
                     value: '0'
@@ -71,4 +72,4 @@ Ext.onReady(function() {
             }
         ]
     });
-});
+    Ext.create('ToDoApp.view.TaskList');

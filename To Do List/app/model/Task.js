@@ -1,14 +1,12 @@
 // Сделал сущность для Задачи.
-//var date = Ext.data.Types.DATE;
-
-Ext.define('TodoApp.model.Task', {
+Ext.define('ToDoApp.model.Task', {
     extend: 'Ext.data.Model',
     fields: [
         {name: 'header', type: 'string'},
         {name: 'description', type: 'string'},
         {name: 'createDate', type: 'date'},
         {name: 'endDate', type: 'date'},
-        {name: 'status', type: 'string'},
+        {name: 'status', type: 'int'},
         {name: 'actions', type: 'string'}
     ],
     validations: [

@@ -1,10 +1,13 @@
 // Сделал store с полями, сюда в data должны записываться задачи для ту-ду-листа.
-Ext.create('ToDoApp.store.taskStore', {
+Ext.define('ToDoApp.store.TaskStore', {
     extend: 'Ext.data.Store',
-    requires  : ['ToDoApp.Task', 'Ext.data.proxy.LocalStorage'],
+    model: 'ToDoApp.model.Task',
+    requires  : ['Ext.data.proxy.LocalStorage'],
 
     proxy: {
         type: 'localstorage',
-        id  : 'Task'
+        id  : 'task'
     }
 });
+
+var stTask = Ext.create('ToDoApp.store.TaskStore');
