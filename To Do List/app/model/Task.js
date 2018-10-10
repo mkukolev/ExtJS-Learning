@@ -12,5 +12,10 @@ Ext.define('ToDoApp.model.Task', {
     validations: [
         {type: 'length', field: 'header', max: 100},
         {type: 'length', field: 'description', max: 255}
-    ]
+    ],
+    proxy: {
+        type: 'localstorage',
+        id  : 'task'
+    }
 });
+
