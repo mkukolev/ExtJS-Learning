@@ -9,7 +9,7 @@ Ext.define('ToDoApp.view.TaskList', {
     align: 'center',
     store: 'TaskStore',
     tbar: [
-        { id: 'createTask', xtype: 'button', text: 'New task', },
+        { id: 'newTask', xtype: 'button', text: 'New task'},
         { id: 'searchBtn', xtype: 'button', text: 'Search'},
         { id: 'searchFld', xtype: 'textfield'}
     ],
@@ -21,9 +21,9 @@ Ext.define('ToDoApp.view.TaskList', {
             text: 'ID'
         },
         {
-            dataIndex: 'header',
+            dataIndex: 'task',
             width: 210,
-            text: 'Header'
+            text: 'Task'
         },
         {   
             dataIndex: 'description',

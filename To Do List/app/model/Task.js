@@ -2,7 +2,8 @@
 Ext.define('ToDoApp.model.Task', {
     extend: 'Ext.data.Model',
     fields: [
-        {name: 'header', type: 'string'},
+        {name: 'id', type: 'int'},
+        {name: 'task', type: 'string'},
         {name: 'description', type: 'string'},
         {name: 'createDate', type: 'date'},
         {name: 'endDate', type: 'date'},
@@ -15,7 +16,7 @@ Ext.define('ToDoApp.model.Task', {
     ],
     proxy: {
         type: 'localstorage',
-        id  : 'task'
+        id  : 'tasks'
     }
 });
 
