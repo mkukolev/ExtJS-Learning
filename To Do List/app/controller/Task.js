@@ -3,38 +3,72 @@ Ext.define('ToDoApp.controller.Task', {
     views: ['TaskList', 'CreateTask'],
 
     init: function () {
-        this.control({
-        '#newTask': {
-            click: this.OpenTaskWin
-        },
-        '#crtTask': {
-            click: this.CreateTask
-        },
 
-        '#closeWin': {
-            click: this.CloseWin
-        }
-        })
+        // if (localStorage) {
+        //     alert("LocalStorage is supported!")
+        // };
+
+        this.control({
+            'tasklist': {
+                render: this.onTaskListRender
+            },
+            '#newTask': {
+                click: this.OpenTaskWin
+            },
+            '#crtTask': {
+                click: this.CreateTask
+            },
+
+            '#closeWin': {
+                click: this.CloseWin
+            }
+        });
+
+    },
+
+    onTaskListRender: function(grid) {
+        grid.getStore().load();
     },
     OpenTaskWin: function () {
         Ext.create('ToDoApp.view.CreateTask');
 
     },
     CreateTask: function (button) {
-        var store = Ext.getStore('TaskStore'),
+
+        var getStore = Ext.getStore('TaskStore'),
             taskWindow = button.findParentByType('window'),
             form = taskWindow.down('#task-fields').getForm(),
+            day = Ext.Date.format(new Date(), 'm/d/Y'),
+            props,
+            record;
+        console.log(day);
 
-            properties = {
-                task: form.findField('task').getValue(),
-                description: form.findField('description').getValue(),
-                // createDate:
-                // endDate:
-                // status:
-                // actions:
+        // props = {
+        //     task: form.findField('task').getValue(),
+        //     description: form.findField('description').getValue(),
+        //     createDate: day
+        //     //endDate:
+        //     //status: 0
+        //     //actions:
+        // };
+        //form.getValues()
+        record = Ext.create('ToDoApp.model.Task', {
+            task: form.findField('task').getValue(),
+            description: form.findField('description').getValue(),
+            createDate: day
+            //endDate:
+            //status: 0
+            //actions:
+        });
+        record.save({
+            success: function() {
+                getStore.add(record);
+                taskWindow.close();
+            },
+            failure: function () {
+                Ext.Msg.alert('Error', "Somthing wrong!");
             }
-            console.log(properties);
-            //taskWindow.close();
+        });
     },
     CloseWin: function (button) {
         button.up('window').close();

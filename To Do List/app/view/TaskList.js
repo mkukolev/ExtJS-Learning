@@ -3,6 +3,7 @@
 // Делаю грид с 6ю столбцами. Хочу сделать его расположение по центру.
 Ext.define('ToDoApp.view.TaskList', {
     extend: 'Ext.grid.Panel',
+    alias: 'widget.tasklist',
     title: 'To Do List',
     width: 850,
     height: 600,
@@ -44,42 +45,45 @@ Ext.define('ToDoApp.view.TaskList', {
         },
         {
             // Комбобокс для выбора статуса задачи.
-            dataIndex: 'status',
+            dataIndex: 'status_id',
             width: 100,
             align: 'center',
             text: 'Done work',
-            editor: 
-            {
+            editor: {
                 xtype: 'combobox',
+                valueField: 'value',
+                displayField: 'status',
                 store: store = function() {
-                    Ext.define('ToDoApp.store.StatusActive', {
+                    Ext.create('ToDoApp.store.StatusStore', {
+                        model: 'ToDoApp.model.StatusModel',
                         extend: 'Ext.data.Store',
-                        fields: [
-                            {name: 'value', type: 'int'},
-                            {name: 'status', type: 'string'}
-                        ],
+                        autoLoad: true,
                         data: [
-                            {value: '0', status: 'Active'},
+                            {value: '2', status: 'Active'},
                             {value: '1', status: 'Done'}
                         ]
                     });
                 },
 
-                valueField: 'value',
-                displayField: 'status',
-                value: '0'
+                renderer: function(value) {
+                    var rec = store.getById(value);
+                    if (rec) {
+                        return rec.get('status')
+                    }
+                        return('Done');
+                },
             }
         },
         {   
             xtype: 'actioncolumn',
-            dataIndex: 'actions',
+            id: 'actions',
             width: 100,
             align: 'center',
-            text: 'Actions',
+            header: 'Actions',
             items: 
             [
-                {iconCls: 'action-edit', tooltip: 'Edit'},
-                {iconCls: 'action-delete', tooltip: 'Delete'}
+                {iconCls: 'action-edit', tooltip: 'Edit', scope: this},
+                {iconCls: 'action-delete', tooltip: 'Delete', scope: this}
             ]
         }
     ]
