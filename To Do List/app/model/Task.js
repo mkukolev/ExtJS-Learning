@@ -1,14 +1,14 @@
 // Сделал сущность для Задачи.
 Ext.define('ToDoApp.model.Task', {
     extend: 'Ext.data.Model',
-    idProperty: 'id',
+    idProperty: 'id', 
     fields: [
         {name: 'id', type: 'int'},
         {name: 'task', type: 'string'},
         {name: 'description', type: 'string'},
         {name: 'createDate', type: 'date'},
-        {name: 'endDate', type: 'date'},
-        {name: 'status_id', type: 'int'},
+        {name: 'endDate', type: 'int'},
+        {name: 'status_id', type: 'string', defaultValue: 'Active'},
         {name: 'actions', type: 'string'}
     ],
     validations: [

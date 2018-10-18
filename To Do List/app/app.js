@@ -1,7 +1,7 @@
 Ext.application({
     name: 'ToDoApp',
     appFolder: 'app',
-    models: ['Task', 'StatusModel'],
+    models: ['Task'],
     stores: ['TaskStore'],
     controllers: ['Task'],
 

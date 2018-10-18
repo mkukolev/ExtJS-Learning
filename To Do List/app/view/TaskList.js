@@ -1,5 +1,4 @@
 
-
 // Делаю грид с 6ю столбцами. Хочу сделать его расположение по центру.
 Ext.define('ToDoApp.view.TaskList', {
     extend: 'Ext.grid.Panel',
@@ -14,73 +13,70 @@ Ext.define('ToDoApp.view.TaskList', {
         { id: 'searchBtn', xtype: 'button', text: 'Search'},
         { id: 'searchFld', xtype: 'textfield'}
     ],
-    columns: [ 
-        {   
-            xtype: 'rownumberer',
+    columns: [
+        {
+            dataIndex: 'id',
             sortable: false,
             width: 30,
-            text: 'ID'
+            header: 'ID'
         },
         {
             dataIndex: 'task',
             width: 210,
-            text: 'Task'
+            header: 'Task'
         },
-        {   
+        {
             dataIndex: 'description',
             width: 210,
-            text: 'Description'
+            header: 'Description'
         },
         {
             dataIndex: 'createDate',
             width: 100,
             align: 'center',
-            text: 'Create date'
+            header: 'Create date'
         },
         {
             dataIndex: 'endDate',
             width: 100,
             align: 'center',
-            text: 'End date',
+            header: 'End date',
         },
         {
             // Комбобокс для выбора статуса задачи.
             dataIndex: 'status_id',
             width: 100,
             align: 'center',
-            text: 'Done work',
+            header: 'Work status',
             editor: {
                 xtype: 'combobox',
                 valueField: 'value',
                 displayField: 'status',
                 store: store = function() {
-                    Ext.create('ToDoApp.store.StatusStore', {
-                        model: 'ToDoApp.model.StatusModel',
-                        extend: 'Ext.data.Store',
-                        autoLoad: true,
+                    Ext.create('Ext.data.Store', {
+                        fields: ['id', 'status'],
                         data: [
-                            {value: '2', status: 'Active'},
-                            {value: '1', status: 'Done'}
+                            {'id': '0', 'status': 'Active'},
+                            {'id': '1', 'status': 'Done'}
                         ]
                     });
                 },
-
-                renderer: function(value) {
-                    var rec = store.getById(value);
-                    if (rec) {
-                        return rec.get('status')
-                    }
-                        return('Done');
-                },
+                renderer: function (value) {
+                    var rec =  store.getById(value)
+                        if(rec) {
+                            return rec.get('status');
+                        }
+                        return '-';
+                }
             }
         },
-        {   
+        {
             xtype: 'actioncolumn',
             id: 'actions',
             width: 100,
             align: 'center',
             header: 'Actions',
-            items: 
+            items:
             [
                 {iconCls: 'action-edit', tooltip: 'Edit', scope: this},
                 {iconCls: 'action-delete', tooltip: 'Delete', scope: this}
