@@ -8,7 +8,7 @@ Ext.define('ToDoApp.model.Task', {
         {name: 'description', type: 'string'},
         {name: 'createDate', type: 'date'},
         {name: 'endDate', type: 'int'},
-        {name: 'status_id', type: 'string', defaultValue: 'Active'},
+        {name: 'status_id', type: 'string'},
         {name: 'actions', type: 'string'}
     ],
     validations: [
@@ -18,6 +18,6 @@ Ext.define('ToDoApp.model.Task', {
     proxy: {
         type: 'localstorage',
         id  : 'newtasks'
-    }
+    },
 });
 

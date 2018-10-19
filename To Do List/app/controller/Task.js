@@ -35,11 +35,10 @@ Ext.define('ToDoApp.controller.Task', {
     },
     CreateTask: function (button) {
 
-        var getStore = Ext.getStore('TaskStore'),
+        var getStoreTask = Ext.getStore('TaskStore'),
             taskWindow = button.findParentByType('window'),
             form = taskWindow.down('#task-fields').getForm(),
             day = Ext.Date.format(new Date(), 'm/d/Y'),
-            fieldData = [],
             props,
             record;
         //console.log(day)
@@ -58,7 +57,7 @@ Ext.define('ToDoApp.controller.Task', {
         console.log(form.getValues());
         record.save({
             success: function() {
-                getStore.add(record);
+                getStoreTask.add(record);
                 taskWindow.close();
             },
             failure: function () {

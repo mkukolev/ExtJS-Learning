@@ -48,26 +48,21 @@ Ext.define('ToDoApp.view.TaskList', {
             width: 100,
             align: 'center',
             header: 'Work status',
+            // renderer: function (status_id) {
+            //     return {
+            //         xtype: 'combobox',
+            //         store: 'StatusStore',
+            //         valueField: 'value',
+            //         displayField: 'status_id',
+            //         value: status_id
+            //     };
+            // }
             editor: {
                 xtype: 'combobox',
+                displayField: 'status_id',
                 valueField: 'value',
-                displayField: 'status',
-                store: store = function() {
-                    Ext.create('Ext.data.Store', {
-                        fields: ['id', 'status'],
-                        data: [
-                            {'id': '0', 'status': 'Active'},
-                            {'id': '1', 'status': 'Done'}
-                        ]
-                    });
-                },
-                renderer: function (value) {
-                    var rec =  store.getById(value)
-                        if(rec) {
-                            return rec.get('status');
-                        }
-                        return '-';
-                }
+                triggerAction: 'all',
+                store: 'ToDoApp.store.StatusStore',
             }
         },
         {

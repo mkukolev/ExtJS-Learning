@@ -1,5 +1,4 @@
 Ext.define('ToDoApp.view.CreateTask', {
-// extend: 'Ext.form.Panel',
     extend: 'Ext.window.Window',
     alias: 'form-create-task',
     title: 'New task',
