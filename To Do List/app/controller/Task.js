@@ -4,10 +4,6 @@ Ext.define('ToDoApp.controller.Task', {
 
     init: function () {
 
-        // if (localStorage) {
-        //     alert("LocalStorage is supported!")
-        // };
-
         this.control({
             'tasklist': {
                 render: this.onTaskListRender
@@ -21,6 +17,13 @@ Ext.define('ToDoApp.controller.Task', {
 
             '#closeWin': {
                 click: this.CloseWin
+            },
+
+            '#saveList': {
+                click: this.SaveList
+            },
+            '#actions': {
+                click: this.ClickOnActions
             }
         });
 
@@ -35,37 +38,92 @@ Ext.define('ToDoApp.controller.Task', {
     },
     CreateTask: function (button) {
 
-        var getStoreTask = Ext.getStore('TaskStore'),
+        var store = Ext.getStore('TaskStore'),
             taskWindow = button.findParentByType('window'),
             form = taskWindow.down('#task-fields').getForm(),
-            day = Ext.Date.format(new Date(), 'm/d/Y'),
-            props,
-            record;
-        //console.log(day)
-        props = form.lenght;
-        console.log(props);
-        // props = {
-        //     task: form.findField('task').getValue(),
-        //     description: form.findField('description').getValue(),
-        //     createDate: day
-        //     //endDate:
-        //     //status: 0
-        //     //actions:
-        // };
-        //form.getValues()
-        record = Ext.create('ToDoApp.model.Task', form.getValues());
-        console.log(form.getValues());
+            dayFormCreate = Ext.Date.format(new Date(), 'd.m.Y'),
+            record,
+            props;
+        props = {
+            task: form.findField('task').getValue(),
+            description: form.findField('description').getValue(),
+            createDate: dayFormCreate,
+        };
+        record = Ext.create('ToDoApp.model.Task', props);
         record.save({
             success: function() {
-                getStoreTask.add(record);
+                store.add(record);
                 taskWindow.close();
             },
+
             failure: function () {
                 Ext.Msg.alert('Error', "Somthing wrong!");
             }
         });
     },
+
     CloseWin: function (button) {
         button.up('window').close();
+    },
+
+    SaveList: function (button) {
+        var grid = button.findParentByType('grid'),
+            dayFormEnd = Ext.Date.format(new Date(), 'd.m.Y'),
+            store = grid.getStore(),
+            statusValue;
+
+            store.sync({
+                success: function () {
+                    console.log('success')
+                },
+                failure: function () {
+                    console.log('failure')
+                }
+            });
+
+
+            store.each(function(rec) {
+                statusValue = rec.get('status_id')
+                if (statusValue == 'Inactive') {
+                    rec.set({
+                        endDate: dayFormEnd
+                    });
+                    rec.save();
+
+                } else if (statusValue == 'Active') {
+                    rec.set({
+                        endDate: ""
+                    });
+                    rec.save();
+                }
+            });
+    },
+
+    ClickOnActions: function (view, td, cellIndex, record, tr, rowIndex, e, eOpts) {
+
+        var grid = view,
+            store = grid.getStore(),
+            elems = rowIndex.getData(),
+            taskName = rowIndex.get('task'),
+            taskDescription = rowIndex.get('description'),
+            eventTarget = Ext.get(tr.target);
+
+        if(eventTarget.hasCls('action-edit')) {
+            Ext.create('ToDoApp.view.CreateTask', {
+                title: 'Edit'
+
+            });
+        }
+        else if (eventTarget.hasCls('action-delete')){
+            Ext.Msg.confirm(
+                'Delete task', Ext.String.format('Delete this task?'),
+                function (answer) {
+                    if (answer === 'yes') {
+                        store.remove(rowIndex);
+                        store.sync();
+                    }
+                }
+            )
+        }
     }
 });

@@ -6,9 +6,9 @@ Ext.define('ToDoApp.model.Task', {
         {name: 'id', type: 'int'},
         {name: 'task', type: 'string'},
         {name: 'description', type: 'string'},
-        {name: 'createDate', type: 'date'},
-        {name: 'endDate', type: 'int'},
-        {name: 'status_id', type: 'string'},
+        {name: 'createDate', type: 'string'},
+        {name: 'endDate', type: 'string'},
+        {name: 'status_id', type: 'string', defaultValue: 'Active'},
         {name: 'actions', type: 'string'}
     ],
     validations: [

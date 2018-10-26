@@ -14,7 +14,7 @@ Ext.define('ToDoApp.view.CreateTask', {
             layout: 'anchor',
             bodyPadding: 15,
             items: [
-                {xtype: 'checkboxfield', fieldLabel: 'Activation'},
+                //{xtype: 'checkboxfield', fieldLabel: 'Activation'},
                 {xtype: 'textfield', fieldLabel: 'Name new task', name: 'task'},
                 {xtype: 'textfield', fieldLabel: 'Description', name: 'description'}
             ]
@@ -23,7 +23,7 @@ Ext.define('ToDoApp.view.CreateTask', {
     buttons: [
         {
             id: 'crtTask',
-            text: 'Create'
+            text: 'Save'
         },
         {   id: 'closeWin',
             text: 'Close'

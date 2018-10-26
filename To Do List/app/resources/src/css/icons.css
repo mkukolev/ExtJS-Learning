@@ -1,0 +1,20 @@
+.action-edit {
+
+    margin-right: 8px;
+    background-image: url(../../images/icons/cog_edit.png)
+}
+.action-delete {
+
+    margin-right: 8px;
+    background-image: url(../../images/icons/table_row_delete.png)
+}
+.action-save {
+
+    margin-right: 8px;
+    background-image: url(../../images/icons/page_save.png)
+}
+.action-new-task {
+
+    margin-right: 8px;
+    background-image: url(../../images/icons/application_form_add.png)
+}

@@ -8,10 +8,13 @@ Ext.define('ToDoApp.view.TaskList', {
     height: 600,
     align: 'center',
     store: 'TaskStore',
+    plugins: [new Ext.grid.plugin.CellEditing({clicksToEdit: 1})],
     tbar: [
-        { id: 'newTask', xtype: 'button', text: 'New task'},
+        { id: 'newTask', xtype: 'button', iconCls: 'action-new-task', text: 'New task'},
         { id: 'searchBtn', xtype: 'button', text: 'Search'},
-        { id: 'searchFld', xtype: 'textfield'}
+        { id: 'searchFld', xtype: 'textfield'},
+        {xtype: 'tbfill'},
+        {id: 'saveList', xtype: 'button', iconCls: 'action-save', text: 'Save status',}
     ],
     columns: [
         {
@@ -45,24 +48,27 @@ Ext.define('ToDoApp.view.TaskList', {
         {
             // Комбобокс для выбора статуса задачи.
             dataIndex: 'status_id',
+            id: 'status',
             width: 100,
             align: 'center',
-            header: 'Work status',
-            // renderer: function (status_id) {
-            //     return {
-            //         xtype: 'combobox',
-            //         store: 'StatusStore',
-            //         valueField: 'value',
-            //         displayField: 'status_id',
-            //         value: status_id
-            //     };
-            // }
+            header: 'Status',
             editor: {
                 xtype: 'combobox',
-                displayField: 'status_id',
-                valueField: 'value',
-                triggerAction: 'all',
-                store: 'ToDoApp.store.StatusStore',
+                id: 'status-list',
+                displayField: 'status',
+                valueField: 'status',
+                selectOnTab: true,
+                editable: false,
+                store: Ext.create('Ext.data.Store', {
+                    fields: [
+                        {name: 'id', type: 'int'},
+                        {name: 'status', type: 'string'}
+                    ],
+                    data: [
+                        {id: '0', status: 'Active'},
+                        {id: '1', status: 'Inactive'}
+                    ]
+                })
             }
         },
         {
@@ -73,9 +79,9 @@ Ext.define('ToDoApp.view.TaskList', {
             header: 'Actions',
             items:
             [
-                {iconCls: 'action-edit', tooltip: 'Edit', scope: this},
-                {iconCls: 'action-delete', tooltip: 'Delete', scope: this}
-            ]
-        }
+                {id: 'editTask', iconCls: 'action-edit', tooltip: 'Edit task', scope: this},
+                {id: 'deleteTask', iconCls: 'action-delete', tooltip: 'Delete task', scope: this}
+            ],
+        },
     ]
 });
