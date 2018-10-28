@@ -103,16 +103,22 @@ Ext.define('ToDoApp.controller.Task', {
 
         var grid = view,
             store = grid.getStore(),
-            elems = rowIndex.getData(),
-            taskName = rowIndex.get('task'),
-            taskDescription = rowIndex.get('description'),
+            createForm = Ext.create('ToDoApp.view.CreateTask'),
             eventTarget = Ext.get(tr.target);
 
         if(eventTarget.hasCls('action-edit')) {
-            Ext.create('ToDoApp.view.CreateTask', {
-                title: 'Edit'
+            createForm.down('form').loadRecord(rowIndex);
+            
+            var testName = rowIndex.data.task,
+                dscrName = rowIndex.data.description;
 
+                rowIndex.set({
+                task: testName,
+                description: dscrName
             });
+            rowIndex.save();
+            console.log(dscrName);
+
         }
         else if (eventTarget.hasCls('action-delete')){
             Ext.Msg.confirm(
