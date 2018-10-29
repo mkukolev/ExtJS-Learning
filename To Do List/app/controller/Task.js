@@ -6,7 +6,8 @@ Ext.define('ToDoApp.controller.Task', {
 
         this.control({
             'tasklist': {
-                render: this.onTaskListRender
+                render: this.onTaskListRender,
+                cellclick: this.ClickOnActions
             },
             '#newTask': {
                 click: this.OpenTaskWin
@@ -21,9 +22,6 @@ Ext.define('ToDoApp.controller.Task', {
 
             '#saveList': {
                 click: this.SaveList
-            },
-            '#actions': {
-                click: this.ClickOnActions
             }
         });
 
@@ -44,15 +42,16 @@ Ext.define('ToDoApp.controller.Task', {
             dayFormCreate = Ext.Date.format(new Date(), 'd.m.Y'),
             record,
             props;
-        props = {
-            task: form.findField('task').getValue(),
-            description: form.findField('description').getValue(),
-            createDate: dayFormCreate,
-        };
+
+        props = Ext.apply({
+            createDate: dayFormCreate
+        }, form.getValues());
+
         record = Ext.create('ToDoApp.model.Task', props);
+        console.log(record.getData());
         record.save({
             success: function() {
-                store.add(record);
+                store.reload();
                 taskWindow.close();
             },
 
@@ -81,7 +80,6 @@ Ext.define('ToDoApp.controller.Task', {
                 }
             });
 
-
             store.each(function(rec) {
                 statusValue = rec.get('status_id')
                 if (statusValue == 'Inactive') {
@@ -103,29 +101,17 @@ Ext.define('ToDoApp.controller.Task', {
 
         var grid = view,
             store = grid.getStore(),
-            createForm = Ext.create('ToDoApp.view.CreateTask'),
-            eventTarget = Ext.get(tr.target);
-z 
+            eventTarget = Ext.get(e.target);
+
         if(eventTarget.hasCls('action-edit')) {
-            createForm.down('form').loadRecord(rowIndex);
-            
-            // var testName = rowIndex.data.task,
-            //     dscrName = rowIndex.data.description;
-
-            //     rowIndex.set({
-            //     task: testName,
-            //     description: dscrName
-            // });
-            // rowIndex.save();
-            // console.log(dscrName);
-
+            Ext.create('ToDoApp.view.CreateTask').down('form').getForm().setValues(record.getData());
         }
         else if (eventTarget.hasCls('action-delete')){
             Ext.Msg.confirm(
                 'Delete task', Ext.String.format('Delete this task?'),
                 function (answer) {
                     if (answer === 'yes') {
-                        store.remove(rowIndex);
+                        store.remove(record);
                         store.sync();
                     }
                 }
