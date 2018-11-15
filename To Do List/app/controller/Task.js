@@ -22,6 +22,9 @@ Ext.define('ToDoApp.controller.Task', {
 
             '#saveList': {
                 click: this.SaveList
+            },
+            '#searchFld': {
+                change: this.SearchTask
             }
         });
 
@@ -29,12 +32,15 @@ Ext.define('ToDoApp.controller.Task', {
 
     onTaskListRender: function(grid) {
         grid.getStore().load();
+
     },
     OpenTaskWin: function () {
         Ext.create('ToDoApp.view.CreateTask');
 
+
     },
     CreateTask: function (button) {
+
 
         var store = Ext.getStore('TaskStore'),
             taskWindow = button.findParentByType('window'),
@@ -95,6 +101,10 @@ Ext.define('ToDoApp.controller.Task', {
                     rec.save();
                 }
             });
+            console.log(grid.down('button'));
+            // if (store.getUpdatedRecords() > 0) {
+            //
+            // }
     },
 
     ClickOnActions: function (view, td, cellIndex, record, tr, rowIndex, e, eOpts) {
@@ -117,5 +127,27 @@ Ext.define('ToDoApp.controller.Task', {
                 }
             )
         }
+    },
+
+    SearchTask: function (field) {
+        var store = Ext.getStore('TaskStore'),
+            value = field.getValue();
+        console.log(value);
+
+        store.clearFilter(true);
+        store.filter([
+            {property: 'task', value: value},
+        ]);
+        // store.filterBy(function (record, id) {
+        //     if(record.get('').indexOf(value) > -1) {
+        //         return;
+        //     }
+        //})
+
+        // {property: 'task', value: value},
+        // {property: 'description', value: value},
+        // {property: 'createDate', value: value},
+        // {property: 'endDate', value: value},
+        // {property: 'status_id', value: value},
     }
 });

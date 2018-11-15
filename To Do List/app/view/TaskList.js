@@ -1,20 +1,20 @@
 
 // Делаю грид с 6ю столбцами. Хочу сделать его расположение по центру.
 Ext.define('ToDoApp.view.TaskList', {
+    id: 'task-list',
     extend: 'Ext.grid.Panel',
     alias: 'widget.tasklist',
     title: 'To Do List',
-    width: 850,
-    height: 600,
-    align: 'center',
+    width: 800,
+    height: 400,
     store: 'TaskStore',
+    layout: 'fit',
     plugins: [new Ext.grid.plugin.CellEditing({clicksToEdit: 1})],
     tbar: [
         { id: 'newTask', xtype: 'button', iconCls: 'action-new-task', text: 'New task'},
-        { id: 'searchBtn', xtype: 'button', text: 'Search'},
-        { id: 'searchFld', xtype: 'textfield'},
+        { id: 'searchFld', xtype: 'textfield', emptyText: 'Search...'},
         {xtype: 'tbfill'},
-        {id: 'saveList', xtype: 'button', iconCls: 'action-save', text: 'Save status',}
+        {id: 'saveList', xtype: 'button', iconCls: 'action-save', text: 'Save status',  disabled: false}
     ],
     columns: [
         {
@@ -25,23 +25,22 @@ Ext.define('ToDoApp.view.TaskList', {
         },
         {
             dataIndex: 'task',
-            width: 210,
+            flex: 1,
+            minWidth: 160,
             header: 'Task'
         },
         {
             dataIndex: 'description',
-            width: 210,
+            minWidth: 160,
             header: 'Description'
         },
         {
             dataIndex: 'createDate',
-            width: 100,
             align: 'center',
             header: 'Create date'
         },
         {
             dataIndex: 'endDate',
-            width: 100,
             align: 'center',
             header: 'End date',
         },
@@ -49,7 +48,6 @@ Ext.define('ToDoApp.view.TaskList', {
             // Комбобокс для выбора статуса задачи.
             dataIndex: 'status_id',
             id: 'status',
-            width: 100,
             align: 'center',
             header: 'Status',
             editor: {
@@ -74,7 +72,7 @@ Ext.define('ToDoApp.view.TaskList', {
         {
             xtype: 'actioncolumn',
             id: 'actions',
-            width: 100,
+            width: 120,
             align: 'center',
             header: 'Actions',
             items:
@@ -83,5 +81,14 @@ Ext.define('ToDoApp.view.TaskList', {
                 {id: 'deleteTask', iconCls: 'action-delete', tooltip: 'Delete task', scope: this}
             ],
         },
-    ]
+    ],
+    dockedItems:
+        [
+            {
+                xtype: 'pagingtoolbar',
+                store: 'TaskStore',
+                dock: 'bottom',
+                displayInfo: true
+            }
+        ],
 });

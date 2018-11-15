@@ -1,0 +1,9 @@
+body{
+    background-image: url(../../images/wallpaper/desk.jpg);
+    background-size: cover;
+}
+
+#task-list {
+    margin: 0 auto;
+    margin-top: 200px;
+}
