@@ -2,6 +2,7 @@
 Ext.define('ToDoApp.store.TaskStore', {
     extend: 'Ext.data.Store',
     model: 'ToDoApp.model.Task',
+    autoLoad: true,
     remoteSort: true,
     filters: [
         {property: 'id', value: ''},

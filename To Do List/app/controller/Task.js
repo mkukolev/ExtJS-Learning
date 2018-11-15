@@ -135,9 +135,9 @@ Ext.define('ToDoApp.controller.Task', {
         console.log(value);
 
         store.clearFilter(true);
-        store.filter([
+        store.filter(
             {property: 'task', value: value},
-        ]);
+        );
         // store.filterBy(function (record, id) {
         //     if(record.get('').indexOf(value) > -1) {
         //         return;
