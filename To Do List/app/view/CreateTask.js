@@ -4,6 +4,7 @@ Ext.define('ToDoApp.view.CreateTask', {
     title: 'New task',
     closable: true,
     autoShow: true,
+    modal: 'true',
     width: 300,
     store: 'TaskStore',
     items: [

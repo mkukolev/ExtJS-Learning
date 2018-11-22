@@ -131,13 +131,28 @@ Ext.define('ToDoApp.controller.Task', {
 
     SearchTask: function (field) {
         var store = Ext.getStore('TaskStore'),
-            value = field.getValue();
-        console.log(value);
-
+            fieldValue = field.getValue();
+            
         store.clearFilter(true);
-        store.filter(
-            {property: 'task', value: value},
-        );
+
+        if (!!fieldValue) {
+            var myFilters = [
+                new Ext.util.Filter({
+                    filterFn: function (item) {
+                        return item.get('task').toLowerCase().indexOf(fieldValue.toLowerCase()) > -1                                 
+                            || item.get('description').toLowerCase().indexOf(fieldValue.toLowerCase()) > -1
+                            || item.get('createDate').toLowerCase().indexOf(fieldValue.toLowerCase()) > -1
+                            || item.get('endDate').toLowerCase().indexOf(fieldValue.toLowerCase()) > -1
+                            || item.get('status_id').toLowerCase().indexOf(fieldValue.toLowerCase()) > -1;
+                    }
+                })
+            ];
+            store.filter(myFilters);
+        }
+
+        // store.filter(
+        //     {property: 'task', value: value},
+        // );
         // store.filterBy(function (record, id) {
         //     if(record.get('').indexOf(value) > -1) {
         //         return;
