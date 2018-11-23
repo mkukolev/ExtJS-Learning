@@ -17,7 +17,7 @@ Ext.define('ToDoApp.view.CreateTask', {
             items: [
                 //{xtype: 'checkboxfield', fieldLabel: 'Activation'},
                 {xtype: 'textfield', fieldLabel: 'ID', name: 'id', hidden: true, readOnly: true},
-                {xtype: 'textfield', fieldLabel: 'Name new task', name: 'task'},
+                {xtype: 'textfield', fieldLabel: 'Name new task', allowBlank: true, name: 'task'},
                 {xtype: 'textfield', fieldLabel: 'Description', name: 'description'}
             ]
         }

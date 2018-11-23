@@ -54,7 +54,6 @@ Ext.define('ToDoApp.controller.Task', {
         }, form.getValues());
 
         record = Ext.create('ToDoApp.model.Task', props);
-        console.log(record.getData());
         record.save({
             success: function() {
                 store.reload();
@@ -62,7 +61,7 @@ Ext.define('ToDoApp.controller.Task', {
             },
 
             failure: function () {
-                Ext.Msg.alert('Error', "Somthing wrong!");
+                Ext.Msg.alert('Error', "Something wrong!");
             }
         });
     },
@@ -77,14 +76,7 @@ Ext.define('ToDoApp.controller.Task', {
             store = grid.getStore(),
             statusValue;
 
-            store.sync({
-                success: function () {
-                    console.log('success')
-                },
-                failure: function () {
-                    console.log('failure')
-                }
-            });
+            store.sync();
 
             store.each(function(rec) {
                 statusValue = rec.get('status_id')
@@ -101,7 +93,6 @@ Ext.define('ToDoApp.controller.Task', {
                     rec.save();
                 }
             });
-            console.log(grid.down('button'));
     },
 
     ClickOnActions: function (view, td, cellIndex, record, tr, rowIndex, e, eOpts) {
@@ -131,20 +122,22 @@ Ext.define('ToDoApp.controller.Task', {
             fieldValue = field.getValue();
 
         store.clearFilter(true);
+        var myFilters = [
+            new Ext.util.Filter({
+                filterFn: function (item) {
 
-        if (!!fieldValue) {
-            var myFilters = [
-                new Ext.util.Filter({
-                    filterFn: function (item) {
-                        return item.get('task').toLowerCase().indexOf(fieldValue.toLowerCase()) > -1                                 
-                            || item.get('description').toLowerCase().indexOf(fieldValue.toLowerCase()) > -1
-                            || item.get('createDate').toLowerCase().indexOf(fieldValue.toLowerCase()) > -1
-                            || item.get('endDate').toLowerCase().indexOf(fieldValue.toLowerCase()) > -1
-                            || item.get('status_id').toLowerCase().indexOf(fieldValue.toLowerCase()) > -1;
-                    }
-                })
-            ];
-            store.filter(myFilters);
-        }
+                    var str = [
+                        item.get('task'),
+                        item.get('description'),
+                        item.get('createDate'),
+                        item.get('endDate'),
+                        item.get('status_id')
+                    ].join(' ');
+
+                    return str.toLowerCase().indexOf(fieldValue.toLowerCase()) !== -1;
+                }
+            })
+        ];
+        store.filter(myFilters);
     }
 });

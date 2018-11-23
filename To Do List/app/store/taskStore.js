@@ -2,8 +2,9 @@
 Ext.define('ToDoApp.store.TaskStore', {
     extend: 'Ext.data.Store',
     model: 'ToDoApp.model.Task',
-    autoLoad: true,
-    remoteSort: true,
+    autoLoad: false,
+    remoteFilter: false,
+    pageSize: 15,
     filters: [
         {property: 'id', value: ''},
         {property: 'task', value: ''},
@@ -12,5 +13,5 @@ Ext.define('ToDoApp.store.TaskStore', {
         {property: 'endDate', value: ''},
         {property: 'status_id', value: ''}
     ]
-});
 
+});

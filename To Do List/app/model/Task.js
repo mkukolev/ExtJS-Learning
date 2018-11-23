@@ -1,7 +1,7 @@
 // Сделал сущность для Задачи.
 Ext.define('ToDoApp.model.Task', {
     extend: 'Ext.data.Model',
-    idProperty: 'id', 
+    idProperty: 'id',
     fields: [
         {name: 'id', type: 'int'},
         {name: 'task', type: 'string'},
@@ -12,12 +12,11 @@ Ext.define('ToDoApp.model.Task', {
         {name: 'actions', type: 'string'}
     ],
     validations: [
-        {type: 'length', field: 'header', max: 100},
+        {type: 'length', field: 'header', min: 5, max: 100},
         {type: 'length', field: 'description', max: 255}
     ],
     proxy: {
         type: 'localstorage',
-        id  : 'newtasks'
+        id  : 'newtasks',
     },
 });
-

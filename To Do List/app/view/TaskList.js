@@ -6,7 +6,7 @@ Ext.define('ToDoApp.view.TaskList', {
     alias: 'widget.tasklist',
     title: 'To Do List',
     width: 800,
-    height: 400,
+    height: 420,
     store: 'TaskStore',
     layout: 'fit',
     plugins: [new Ext.grid.plugin.CellEditing({clicksToEdit: 1})],
@@ -19,7 +19,7 @@ Ext.define('ToDoApp.view.TaskList', {
     columns: [
         {
             dataIndex: 'id',
-            sortable: false,
+            resizable: false,
             width: 30,
             header: 'ID'
         },
@@ -31,16 +31,19 @@ Ext.define('ToDoApp.view.TaskList', {
         },
         {
             dataIndex: 'description',
+            flex: 1,
             minWidth: 160,
             header: 'Description'
         },
         {
             dataIndex: 'createDate',
+            resizable: false,
             align: 'center',
             header: 'Create date'
         },
         {
             dataIndex: 'endDate',
+            resizable: false,
             align: 'center',
             header: 'End date',
         },
@@ -48,6 +51,7 @@ Ext.define('ToDoApp.view.TaskList', {
             // Комбобокс для выбора статуса задачи.
             dataIndex: 'status_id',
             id: 'status',
+            resizable: false,
             align: 'center',
             header: 'Status',
             editor: {
@@ -82,13 +86,15 @@ Ext.define('ToDoApp.view.TaskList', {
             ],
         },
     ],
-    dockedItems:
-        [
-            {
-                xtype: 'pagingtoolbar',
-                store: 'TaskStore',
-                dock: 'bottom',
-                displayInfo: true
-            }
-        ],
+    dockedItems: [{
+        xtype: 'pagingtoolbar',
+        dock: 'bottom',
+        displayInfo: true,
+        store: Ext.create('ToDoApp.store.TaskStore', {
+            autoLoad: {start: 0, limit: 15},
+            remoteFilter: true,
+            autoSync: true,
+        })
+
+    }],
 });
