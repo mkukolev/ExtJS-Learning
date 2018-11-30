@@ -86,15 +86,14 @@ Ext.define('ToDoApp.view.TaskList', {
             ],
         },
     ],
-    dockedItems: [{
-        xtype: 'pagingtoolbar',
-        dock: 'bottom',
-        displayInfo: true,
-        store: Ext.create('ToDoApp.store.TaskStore', {
-            autoLoad: {start: 0, limit: 15},
-            remoteFilter: true,
-            autoSync: true,
-        })
-
-    }],
+    // dockedItems: [{
+    //     xtype: 'pagingtoolbar',
+    //     dock: 'bottom',
+    //     displayInfo: true,
+    //     store: Ext.create('ToDoApp.store.TaskStore', {
+    //         autoLoad: true,
+    //         remoteFilter: true,
+    //         autoSync: true,
+    //     })
+    // }]
 });
